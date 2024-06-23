@@ -1,0 +1,8 @@
+#!/bin/bash
+
+rm -r public/dist
+mv build/dist public/
+cp build/template.html build/index.php
+mv build/template.html public/index.php
+rm -r build
+echo "moved build/dist to public/assets"

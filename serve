@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Load .env file
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+else
+    echo ".env file not found!"
+    exit 1
+fi
+
+# Check if APP_HOST and APP_PORT are set
+if [ -z "$APP_HOST" ]; then
+    APP_HOST="localhost"
+fi
+
+if [ -z "$APP_PORT" ]; then
+    APP_PORT="80"
+fi
+
+echo "URL: http://$APP_HOST:$APP_PORT"
+
+php -S "$APP_HOST":"$APP_PORT" -t build
