@@ -1,14 +1,23 @@
 import DataTable from '@/components/Data/DataTable';
-import { useEffect, useState } from 'react';
+import DateRangeSelect from '@/components/Controls/DateRangeSelect';
+import DateRangeSelectbackup from '@/components/Controls/DateRangeSelectbackup';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import Calendars from '@/components/Controls/Calendars.jsx';
 
 export default function Contacts () {
+  const query = new URLSearchParams(useLocation().search);
+
   const [ meta, setMeta ] = useState({
-    limit: 1,
+    limit: query.get('limit') || 10,
+    range: { startDate: query.get('start') || null, endDate: query.get('end') || null },
     offset: 0,
     after: null,
     history: [ null ],
+    total: 0,
   });
+
   const [ currentHistoryIndex, setCurrentHistoryIndex ] = useState(0);
 
   const [ contacts, setContacts ] = useState({
@@ -18,7 +27,7 @@ export default function Contacts () {
       { key: 'properties.firstname', title: 'First Name' },
       { key: 'properties.lastname', title: 'Last Name' },
       { key: 'properties.createdate', title: 'Customer Date', type: 'date' },
-      // { key: 'TODO: look in docs', title: 'Lead Date' },
+      { key: 'properties.leaddate', title: 'Lead Date' },
     ],
     results: [],
     paging: {
@@ -29,12 +38,12 @@ export default function Contacts () {
     },
   });
 
-  async function getContactsList ({ limit, offset }) {
+  async function getContactsList () {
     setContacts({ ...contacts, loading: true });
     const { data } = await axios.get(`/api/contacts/list.php`, {
       params: {
-        limit,
-        offset,
+        limit: meta.limit,
+        range: meta.range,
         after: meta.history?.[currentHistoryIndex],
       }
     });
@@ -47,16 +56,19 @@ export default function Contacts () {
 
     setMeta({
       ...meta,
-      ...data.paging,
+      total: data.total,
+      after: data.paging?.next?.after,
       history: meta.history.concat([ data?.paging?.next?.after ]),
     });
-
-    console.log(180, currentHistoryIndex, meta.history?.[currentHistoryIndex])
   }
 
   useEffect(() => {
-    getContactsList({ limit: meta.limit, offset: meta.offset });
-  }, [ currentHistoryIndex ]);
+    getContactsList();
+  }, [ currentHistoryIndex, meta.range ]);
+
+  function onUpdateDateRange (dates) {
+    setMeta({ ...meta, range: dates });
+  }
 
   return (
     <>
@@ -65,9 +77,12 @@ export default function Contacts () {
         headers={contacts.headers}
         items={contacts.results}
         loading={contacts.loading}
-        paging={contacts.paging}
+        meta={meta}
         currentHistoryIndex={currentHistoryIndex}
         setCurrentHistoryIndex={setCurrentHistoryIndex}
+        actions={(
+          <DateRangeSelect onUpdateValue={onUpdateDateRange}/>
+        )}
       />
     </>
   );

@@ -2,19 +2,22 @@ import { get } from 'lodash';
 import moment from 'moment';
 import ArrowRightIcon from '@/components/Icons/ArrowRightIcon';
 import ArrowLeftIcon from '@/components/Icons/ArrowLeftIcon';
+import { isNil } from 'lodash/lang.js';
 
 export default function DataTable ({
+                                     title,
                                      headers,
                                      items,
-                                     paging,
+                                     meta,
                                      loading,
+                                     actions,
                                      currentHistoryIndex,
                                      setCurrentHistoryIndex,
                                      onPageChange
                                    }) {
-  const meta = {
+  const paging = {
     currentPage: currentHistoryIndex + 1,
-    ...paging,
+    ...meta,
   }
 
   const onPrevious = () => {
@@ -53,13 +56,16 @@ export default function DataTable ({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
-      {console.log(100, meta)}
+    <div className="bg-white rounded-lg shadow-md">
+      <div className="px-4 py-4 flex align-items-center justify-between">
+        <h2 className="text-2xl font-bold">{title || 'Data'}</h2>
+        {actions}
+      </div>
       <table className="min-w-full bg-white">
         <thead>
         <tr>
           {headers.map((header) => <th key={header.key}
-                                       className="py-2 px-4 border-b text-left min-w-[300px]">{header.title}</th>)}
+                                       className="py-2 px-4 border-t border-b text-left min-w-[100px] bg-gray-100">{header.title}</th>)}
         </tr>
         </thead>
         <tbody>
@@ -77,11 +83,11 @@ export default function DataTable ({
         )}
         </tbody>
       </table>
-      <div className="flex items-center justify-between p-4 bg-gray-100">
+      <div className="flex items-center justify-between p-4">
         <button
           onClick={onPrevious}
           className="flex gap-3 justify-content-center font-inter text-sm font-semibold leading-5 text-center box-border px-3.5 py-2 w-auto h-[36px] bg-white border border-gray-300 shadow-sm rounded-md disabled:shadow-none disabled:opacity-50"
-          disabled={meta.currentPage == 1}
+          disabled={paging.currentPage == 1}
         >
           <ArrowLeftIcon/>
           Previous
@@ -89,9 +95,8 @@ export default function DataTable ({
         <div className="flex">{renderPagination()}</div>
         <button
           onClick={onNext}
-          // className="px-4 py-2 bg-white rounded disabled:opacity-50"
           className="flex gap-3 justify-content-center font-inter text-sm font-semibold leading-5 text-center box-border px-3.5 py-2 w-auto h-[36px] bg-white border border-gray-300 shadow-sm rounded-md disabled:shadow-none disabled:opacity-50"
-          // disabled={meta.currentPage === totalPages}
+          disabled={isNil(paging.after)}
         >
           <span>Next</span>
           <ArrowRightIcon/>
