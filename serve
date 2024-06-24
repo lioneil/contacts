@@ -1,5 +1,7 @@
 #!/bin/bash
 
+npm run build
+
 # Load .env file
 if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
@@ -19,4 +21,4 @@ fi
 
 echo "URL: http://$APP_HOST:$APP_PORT"
 
-php -S "$APP_HOST":"$APP_PORT" -t build
+php -S "$APP_HOST":"$APP_PORT" -t public/

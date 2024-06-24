@@ -10,7 +10,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Api\\": "api/"
+            "Api\\Endpoints\\": "api/Endpoints/",
+            "Api\\Middleware\\": "api/Middleware/"
         }
     },
     "authors": [

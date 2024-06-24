@@ -8,11 +8,15 @@
     "build": "vite build",
     "postbuild": ".bin/post.ui.build",
     "lint": "eslint app --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "watch": "chokidar 'app/**/*' -c 'npm run build'"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.40.0",
     "autoprefixer": "^10.4.19",
+    "axios": "^1.7.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1",
     "postcss": "^8.4.38",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -23,6 +27,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "chokidar-cli": "^3.0.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",

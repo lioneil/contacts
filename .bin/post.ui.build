@@ -2,7 +2,7 @@
 
 rm -r public/dist
 mv build/dist public/
-cp build/template.html build/index.php
-mv build/template.html public/index.php
-rm -r build
+cp build/index.html build/index.php
+mv build/index.html public/index.php
+
 echo "moved build/dist to public/assets"
