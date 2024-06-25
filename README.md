@@ -1,4 +1,4 @@
-# Coding Trial
+# Contacts
 
 ![Screenshot](./screenshot.png)
 
