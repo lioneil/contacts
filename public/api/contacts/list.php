@@ -4,7 +4,7 @@ use Api\Endpoints\GetHubSpotContactsEndpoint;
 use Api\Middleware\AllowAjaxRequestsOnly;
 use Api\Middleware\AllowRequestsIfHubSpotAccessTokenValid;
 
-//(new AllowAjaxRequestsOnly)->enable();
+(new AllowAjaxRequestsOnly)->enable();
 (new AllowRequestsIfHubSpotAccessTokenValid)->enable();
 
 $hubspot = new GetHubSpotContactsEndpoint;

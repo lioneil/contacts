@@ -1,10 +1,8 @@
 import DataTable from '@/components/Data/DataTable';
-import DateRangeSelect from '@/components/Controls/DateRangeSelect';
-import DateRangeSelectbackup from '@/components/Controls/DateRangeSelectbackup';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Calendars from '@/components/Controls/Calendars.jsx';
+import DateRangePicker from '@/components/Controls/DateRangePicker';
 
 export default function Contacts () {
   const query = new URLSearchParams(useLocation().search);
@@ -26,8 +24,8 @@ export default function Contacts () {
       { key: 'properties.email', title: 'Email' },
       { key: 'properties.firstname', title: 'First Name' },
       { key: 'properties.lastname', title: 'Last Name' },
-      { key: 'properties.createdate', title: 'Customer Date', type: 'date' },
-      { key: 'properties.leaddate', title: 'Lead Date' },
+      { key: 'createdAt', title: 'Customer Date', type: 'date' },
+      // TODO: { key: 'properties.leaddate', title: 'Lead Date' },
     ],
     results: [],
     paging: {
@@ -81,7 +79,9 @@ export default function Contacts () {
         currentHistoryIndex={currentHistoryIndex}
         setCurrentHistoryIndex={setCurrentHistoryIndex}
         actions={(
-          <DateRangeSelect onUpdateValue={onUpdateDateRange}/>
+          <>
+            <DateRangePicker onUpdate={onUpdateDateRange}/>
+          </>
         )}
       />
     </>
