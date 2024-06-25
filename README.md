@@ -1,12 +1,38 @@
-# React + Vite
+# Coding Trial
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Screenshot](./screenshot.png)
 
-Currently, two official plugins are available:
+Written in Plain PHP + ReactJS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisites
 
-# TODO
+* PHP 8.2+
+* Composer v2.7+
+* Node v18+
 
-- [ ] Refresh token
+## Preview Demo
+
+Install dependencies:
+
+```bash
+composer install
+npm install
+```
+
+Copy `.env` file and populate:
+
+```bash
+cp .env.example .env
+```
+
+Build the asset files if no `public/dist` folder is found.
+
+```bash
+composer run-script build
+```
+
+Then run a PHP server:
+
+```bash
+php -S localhost:8000 -t public/
+```
