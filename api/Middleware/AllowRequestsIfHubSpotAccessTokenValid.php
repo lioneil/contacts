@@ -23,7 +23,7 @@ class AllowRequestsIfHubSpotAccessTokenValid
 
     public function isExpired(): bool
     {
-        return ($_SESSION['token_expiration'] <= time());
+        return ($_SESSION['token_expiration'] <= (time() - 60));
     }
 
     public function refresh(): void
