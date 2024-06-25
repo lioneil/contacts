@@ -86,7 +86,7 @@ export default function DataTable ({
       <div className="flex items-center justify-between p-4">
         <button
           onClick={onPrevious}
-          className="flex gap-3 justify-content-center font-inter text-sm font-semibold leading-5 text-center box-border px-3.5 py-2 w-auto h-[36px] bg-white border border-gray-300 shadow-sm rounded-md disabled:shadow-none disabled:opacity-50"
+          className="btn-default"
           disabled={paging.currentPage == 1}
         >
           <ArrowLeftIcon/>
@@ -95,7 +95,7 @@ export default function DataTable ({
         <div className="flex">{renderPagination()}</div>
         <button
           onClick={onNext}
-          className="flex gap-3 justify-content-center font-inter text-sm font-semibold leading-5 text-center box-border px-3.5 py-2 w-auto h-[36px] bg-white border border-gray-300 shadow-sm rounded-md disabled:shadow-none disabled:opacity-50"
+          className="btn-default"
           disabled={isNil(paging.after)}
         >
           <span>Next</span>
